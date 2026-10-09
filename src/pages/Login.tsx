@@ -27,18 +27,21 @@ export default function Login() {
   };
 
   return (
-    <form className="card stack" style={{ maxWidth: 420 }} onSubmit={submit}>
-      <h2>{t("login")}</h2>
-      <label>
-        {t("email")}
-        <input value={email} onChange={(e) => setEmail(e.target.value)} />
-      </label>
-      <label>
-        {t("password")}
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      {error && <div className="error">{error}</div>}
-      <button className="btn">{t("login")}</button>
-    </form>
+    <div className="page narrow">
+      <form className="panel stack" onSubmit={submit}>
+        <h2>{t("login")}</h2>
+        <p className="lede">customer@demo.com / demo1234</p>
+        <label>
+          {t("email")}
+          <input value={email} onChange={(e) => setEmail(e.target.value)} />
+        </label>
+        <label>
+          {t("password")}
+          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </label>
+        {error && <div className="error">{error}</div>}
+        <button className="btn">{t("login")}</button>
+      </form>
+    </div>
   );
 }

@@ -19,26 +19,30 @@ export default function Orders() {
   }, [token]);
 
   return (
-    <div className="stack">
-      <h2>{t("orders")}</h2>
-      {orders.map((o) => (
-        <div className="card" key={o.id}>
-          <div className="row" style={{ justifyContent: "space-between" }}>
-            <strong>{o.order_no}</strong>
-            <span className={`badge ${o.status}`}>{o.status}</span>
-          </div>
-          <div className="muted">
-            {t("total")}: {formatMoney(o.total_cents, i18n.language)}
-          </div>
-          <ul>
-            {o.items?.map((it) => (
-              <li key={it.id}>
-                {it.product_name_snapshot} × {it.quantity}
-              </li>
-            ))}
-          </ul>
+    <div className="page narrow">
+      <div className="panel">
+        <h2>{t("orders")}</h2>
+        <div className="stack">
+          {orders.map((o) => (
+            <div className="line-item" key={o.id} style={{ alignItems: "flex-start" }}>
+              <div>
+                <strong>{o.order_no}</strong>
+                <div className="muted">
+                  {t("total")}: {formatMoney(o.total_cents, i18n.language)}
+                </div>
+                <ul style={{ margin: "8px 0 0", paddingLeft: 18, color: "#86868b" }}>
+                  {o.items?.map((it) => (
+                    <li key={it.id}>
+                      {it.product_name_snapshot} × {it.quantity}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <span className={`badge ${o.status}`}>{o.status}</span>
+            </div>
+          ))}
         </div>
-      ))}
+      </div>
     </div>
   );
 }

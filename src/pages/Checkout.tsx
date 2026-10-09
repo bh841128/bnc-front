@@ -49,24 +49,27 @@ export default function Checkout() {
   };
 
   return (
-    <form className="card stack" style={{ maxWidth: 480 }} onSubmit={submit}>
-      <h2>{t("checkout")}</h2>
-      <label>
-        {t("shippingName")}
-        <input value={name} onChange={(e) => setName(e.target.value)} required />
-      </label>
-      <label>
-        {t("shippingPhone")}
-        <input value={phone} onChange={(e) => setPhone(e.target.value)} required />
-      </label>
-      <label>
-        {t("shippingAddress")}
-        <textarea value={address} onChange={(e) => setAddress(e.target.value)} required />
-      </label>
-      {error && <div className="error">{error}</div>}
-      <button className="btn" disabled={loading}>
-        {t("placeOrder")}
-      </button>
-    </form>
+    <div className="page narrow">
+      <form className="panel stack" onSubmit={submit}>
+        <h2>{t("checkout")}</h2>
+        <p className="lede">{t("placeOrder")}</p>
+        <label>
+          {t("shippingName")}
+          <input value={name} onChange={(e) => setName(e.target.value)} required />
+        </label>
+        <label>
+          {t("shippingPhone")}
+          <input value={phone} onChange={(e) => setPhone(e.target.value)} required />
+        </label>
+        <label>
+          {t("shippingAddress")}
+          <textarea value={address} onChange={(e) => setAddress(e.target.value)} required rows={3} />
+        </label>
+        {error && <div className="error">{error}</div>}
+        <button className="btn" disabled={loading}>
+          {t("placeOrder")}
+        </button>
+      </form>
+    </div>
   );
 }

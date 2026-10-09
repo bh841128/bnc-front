@@ -30,17 +30,19 @@ export default function MockPay() {
   };
 
   return (
-    <div className="card stack" style={{ maxWidth: 480 }}>
-      <h2>{t("pay")}</h2>
-      <p className="muted">{t("mockPayHint")}</p>
-      {error && <div className="error">{error}</div>}
-      <div className="row">
-        <button className="btn" disabled={busy} onClick={() => confirm("succeeded")}>
-          {t("paySuccess")}
-        </button>
-        <button className="btn danger" disabled={busy} onClick={() => confirm("failed")}>
-          {t("payFail")}
-        </button>
+    <div className="page narrow">
+      <div className="panel stack">
+        <h2>{t("pay")}</h2>
+        <p className="lede">{t("mockPayHint")}</p>
+        {error && <div className="error">{error}</div>}
+        <div className="row" style={{ justifyContent: "center" }}>
+          <button className="btn" disabled={busy} onClick={() => confirm("succeeded")}>
+            {t("paySuccess")}
+          </button>
+          <button className="btn secondary" disabled={busy} onClick={() => confirm("failed")}>
+            {t("payFail")}
+          </button>
+        </div>
       </div>
     </div>
   );

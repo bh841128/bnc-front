@@ -10,47 +10,72 @@ export default function Home() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const q = category ? `?category=${encodeURIComponent(category)}` : "";
-    api<Product[]>(`/api/products${q}`)
+    api<Product[]>("/api/products")
       .then(setProducts)
       .catch((e) => setError(e?.message || "Failed to load"));
-  }, [category]);
+  }, []);
 
   const categories = useMemo(
     () => Array.from(new Set(products.map((p) => p.category))),
     [products]
   );
 
+  const visible = category ? products.filter((p) => p.category === category) : products;
+
   return (
-    <div className="stack">
-      <div className="row">
-        <label style={{ margin: 0, width: "auto" }}>
-          {t("category")}
-          <select value={category} onChange={(e) => setCategory(e.target.value)}>
-            <option value="">{t("all")}</option>
-            {categories.map((c) => (
-              <option key={c} value={c}>
-                {c}
-              </option>
-            ))}
-          </select>
-        </label>
+    <>
+      <section className="hero">
+        <p className="eyebrow">BNC</p>
+        <h1>{t("heroTitle")}</h1>
+        <p className="sub">{t("heroSub")}</p>
+        <div className="cta-row">
+          <a href="#collection">{t("heroCta")} →</a>
+        </div>
+      </section>
+
+      <div className="page" id="collection">
+        <h2 className="section-title">{t("collection")}</h2>
+        <div className="filters">
+          <button
+            type="button"
+            className={`chip ${category === "" ? "active" : ""}`}
+            onClick={() => setCategory("")}
+          >
+            {t("all")}
+          </button>
+          {categories.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`chip ${category === c ? "active" : ""}`}
+              onClick={() => setCategory(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+        {error && <div className="error">{error}</div>}
+        <div className="tile-grid">
+          {visible.map((p, idx) => (
+            <Link
+              key={p.id}
+              to={`/products/${p.id}`}
+              className={`tile ${idx % 3 === 0 ? "dark" : ""}`}
+            >
+              <h3>{pickI18n(p.name_i18n, i18n.language)}</h3>
+              <p className="tagline">{pickI18n(p.description_i18n, i18n.language)}</p>
+              <p className="meta">
+                {t("from")} {formatMoney(p.price_cents, i18n.language)}
+              </p>
+              <div className="links">
+                <span>{t("learnMore")} ›</span>
+                <span>{t("buy")} ›</span>
+              </div>
+              <div className="tile-visual" aria-hidden />
+            </Link>
+          ))}
+        </div>
       </div>
-      {error && <div className="error">{error}</div>}
-      <div className="grid">
-        {products.map((p) => (
-          <Link key={p.id} to={`/products/${p.id}`} className="card">
-            <h3>{pickI18n(p.name_i18n, i18n.language)}</h3>
-            <div className="muted">{p.category}</div>
-            <div>
-              {t("price")}: {formatMoney(p.price_cents, i18n.language)}
-            </div>
-            <div className="muted">
-              {t("stock")}: {p.stock}
-            </div>
-          </Link>
-        ))}
-      </div>
-    </div>
+    </>
   );
 }

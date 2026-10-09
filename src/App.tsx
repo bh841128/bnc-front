@@ -21,7 +21,9 @@ export default function App() {
   return (
     <div className="shell">
       <nav className="nav">
-        <div className="brand">{t("brand")}</div>
+        <NavLink to="/" className="brand" end>
+          {t("brand")}
+        </NavLink>
         <div className="nav-links">
           <NavLink to="/" end>
             {t("home")}
@@ -29,17 +31,13 @@ export default function App() {
           <NavLink to="/cart">{t("cart")}</NavLink>
           <NavLink to="/orders">{t("orders")}</NavLink>
           {user ? (
-            <button className="btn secondary" onClick={logout}>
-              {t("logout")} ({user.email})
+            <button className="ghost-btn" onClick={logout} type="button">
+              {t("logout")}
             </button>
           ) : (
             <NavLink to="/login">{t("login")}</NavLink>
           )}
-          <select
-            value={i18n.language}
-            onChange={(e) => setLang(e.target.value)}
-            style={{ width: "auto" }}
-          >
+          <select value={i18n.language} onChange={(e) => setLang(e.target.value)}>
             <option value="zh">{t("lang_zh")}</option>
             <option value="en">{t("lang_en")}</option>
             <option value="id">{t("lang_id")}</option>
@@ -55,6 +53,9 @@ export default function App() {
         <Route path="/orders" element={<Orders />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <footer className="footer-note">
+        Copyright © {new Date().getFullYear()} BNC Demo. Inspired by Apple.com layout language.
+      </footer>
     </div>
   );
 }

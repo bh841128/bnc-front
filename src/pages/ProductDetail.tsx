@@ -25,33 +25,52 @@ export default function ProductDetail() {
       return;
     }
     try {
-      await api("/api/cart/items", { method: "POST", body: JSON.stringify({ product_id: Number(id), quantity: qty }) }, token);
+      await api(
+        "/api/cart/items",
+        { method: "POST", body: JSON.stringify({ product_id: Number(id), quantity: qty }) },
+        token
+      );
       nav("/cart");
     } catch (e: any) {
       setError(e?.message || e?.code || "Add failed");
     }
   };
 
-  if (!product) return <div>{error || "..."}</div>;
+  if (!product) {
+    return (
+      <div className="page narrow">
+        <div className="panel">{error || "..."}</div>
+      </div>
+    );
+  }
 
   return (
-    <div className="card stack" style={{ maxWidth: 560 }}>
-      <h2>{pickI18n(product.name_i18n, i18n.language)}</h2>
-      <p className="muted">{pickI18n(product.description_i18n, i18n.language)}</p>
-      <div>
-        {t("price")}: {formatMoney(product.price_cents, i18n.language)}
+    <>
+      <div className="product-hero">
+        <h1>{pickI18n(product.name_i18n, i18n.language)}</h1>
+        <p className="price">
+          {formatMoney(product.price_cents, i18n.language)} · {t("stock")} {product.stock}
+        </p>
+        <div className="product-stage" aria-hidden />
       </div>
-      <div>
-        {t("stock")}: {product.stock}
+      <div className="page narrow">
+        <div className="panel stack">
+          <p className="lede">{pickI18n(product.description_i18n, i18n.language)}</p>
+          <label>
+            {t("quantity")}
+            <input
+              type="number"
+              min={1}
+              value={qty}
+              onChange={(e) => setQty(Number(e.target.value))}
+            />
+          </label>
+          {error && <div className="error">{error}</div>}
+          <button className="btn" onClick={add}>
+            {t("addToCart")}
+          </button>
+        </div>
       </div>
-      <label>
-        {t("quantity")}
-        <input type="number" min={1} value={qty} onChange={(e) => setQty(Number(e.target.value))} />
-      </label>
-      {error && <div className="error">{error}</div>}
-      <button className="btn" onClick={add}>
-        {t("addToCart")}
-      </button>
-    </div>
+    </>
   );
 }
