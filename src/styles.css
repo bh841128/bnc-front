@@ -1,0 +1,57 @@
+:root {
+  --bg: #f3efe6;
+  --ink: #1c2420;
+  --accent: #0f6a56;
+  --card: #fffdf8;
+  --line: #d8d0c2;
+  --danger: #b42318;
+  --ok: #067647;
+  font-family: "IBM Plex Sans", "Noto Sans SC", system-ui, sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at top left, #fff8e8, var(--bg) 45%, #e7efe9);
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+
+.shell { max-width: 1080px; margin: 0 auto; padding: 1rem 1.25rem 3rem; }
+.nav {
+  display: flex; gap: 1rem; align-items: center; justify-content: space-between;
+  padding: 0.75rem 0 1.25rem; border-bottom: 1px solid var(--line); margin-bottom: 1.5rem;
+}
+.brand { font-weight: 700; font-size: 1.25rem; letter-spacing: 0.02em; }
+.nav-links { display: flex; gap: 0.85rem; align-items: center; flex-wrap: wrap; }
+.nav-links a.active { color: var(--accent); font-weight: 600; }
+
+.grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1rem;
+}
+.card {
+  background: var(--card); border: 1px solid var(--line); border-radius: 14px;
+  padding: 1rem; box-shadow: 0 8px 24px rgba(28, 36, 32, 0.04);
+}
+.card h3 { margin: 0 0 0.35rem; font-size: 1.05rem; }
+.muted { color: #5b645e; font-size: 0.92rem; }
+.row { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; }
+.btn {
+  border: none; border-radius: 10px; padding: 0.55rem 0.95rem; cursor: pointer;
+  background: var(--accent); color: white; font-weight: 600;
+}
+.btn.secondary { background: #e7efe9; color: var(--ink); }
+.btn.danger { background: var(--danger); }
+.btn:disabled { opacity: 0.6; cursor: not-allowed; }
+input, select, textarea {
+  width: 100%; padding: 0.55rem 0.7rem; border-radius: 10px;
+  border: 1px solid var(--line); background: white; font: inherit;
+}
+label { display: grid; gap: 0.3rem; margin-bottom: 0.75rem; font-size: 0.92rem; }
+.stack { display: grid; gap: 0.75rem; }
+.badge {
+  display: inline-block; padding: 0.15rem 0.5rem; border-radius: 999px;
+  background: #e7efe9; font-size: 0.8rem;
+}
+.badge.paid { background: #dcfae6; color: var(--ok); }
+.badge.cancelled { background: #fee4e2; color: var(--danger); }
+.badge.pending_payment { background: #fef3c7; color: #92400e; }
+.error { color: var(--danger); }
